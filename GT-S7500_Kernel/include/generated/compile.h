@@ -1,8 +1,8 @@
-/* This file is auto generated, version 6 */
+/* This file is auto generated, version 7 */
 /*  PREEMPT */
 #define UTS_MACHINE "arm"
-#define UTS_VERSION "#6 PREEMPT Sun May 27 12:28:38 WEST 2012"
-#define LINUX_COMPILE_TIME "12:28:38"
+#define UTS_VERSION "#7 PREEMPT Sun May 27 21:46:47 WEST 2012"
+#define LINUX_COMPILE_TIME "21:46:47"
 #define LINUX_COMPILE_BY "blackburner"
 #define LINUX_COMPILE_HOST "clunker"
 #define LINUX_COMPILE_DOMAIN "(none)"
