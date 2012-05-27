@@ -1,0 +1,8 @@
+/* This file is auto generated, version 0 */
+#define UTS_MACHINE ""
+#define UTS_VERSION "#0 Sat May 26 15:59:24 WEST 2012"
+#define LINUX_COMPILE_TIME "15:59:24"
+#define LINUX_COMPILE_BY "luis"
+#define LINUX_COMPILE_HOST "clunker"
+#define LINUX_COMPILE_DOMAIN "(none)"
+#define LINUX_COMPILER "/home/luis/Desktop/GT-S7500_GB_Opensource/GT-S7500_Kernel/scripts/mkcompile_h: line 81: -v: command not found"
