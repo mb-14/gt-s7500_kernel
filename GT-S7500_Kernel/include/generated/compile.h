@@ -1,9 +1,9 @@
-/* This file is auto generated, version 8 */
+/* This file is auto generated, version 16 */
 /*  PREEMPT */
 #define UTS_MACHINE "arm"
-#define UTS_VERSION "#8 PREEMPT Sun May 27 22:26:11 WEST 2012"
-#define LINUX_COMPILE_TIME "22:26:11"
-#define LINUX_COMPILE_BY "blackburner"
-#define LINUX_COMPILE_HOST "clunker"
+#define UTS_VERSION "#16 PREEMPT Tue May 29 21:32:34 MST 2012"
+#define LINUX_COMPILE_TIME "21:32:34"
+#define LINUX_COMPILE_BY "mb-14"
+#define LINUX_COMPILE_HOST "localhost"
 #define LINUX_COMPILE_DOMAIN "(none)"
-#define LINUX_COMPILER "gcc version 4.4.1 (Sourcery G++ Lite 2009q3-68) "
+#define LINUX_COMPILER "gcc version 4.4.3 (GCC) "
