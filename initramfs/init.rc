@@ -223,6 +223,7 @@ on post-fs
     mkdir /data/misc/systemkeys 0700 system system
     mkdir /data/misc/vpn/profiles 0770 system system
     mkdir /data/misc/radio 0775 radio system
+	chmod 0775 /data/misc/radio
 
     # give system access to wpa_supplicant.conf for backup and restore
     #mkdir /data/misc/wifi 0770 wifi wifi
@@ -253,6 +254,7 @@ on post-fs
     chmod 0755 /system/bin/RescueStarter
     chown root root /system/bin/RescueServer
     chmod 0755 /system/bin/RescueServer
+
 
     # for TRP/TIS
     write /data/.psm.info 1
@@ -291,6 +293,7 @@ on post-fs
 	# create anr directory
 	mkdir /data/anr  0777 system system
 	chmod 0775 /data/anr
+
 
     # create dalvik-cache and double-check the perms
     mkdir /data/dalvik-cache 0771 system system
@@ -399,6 +402,8 @@ on boot
     chown system system /sys/class/timed_output/vibrator/enable
     chmod 0664 /sys/devices/virtual/sec/sec_qtkey/brightness
     chown system system /sys/devices/virtual/sec/sec_qtkey/brightness
+    chmod 0664 /sys/class/sec/sec_misc/slideCount
+    chown radio system /sys/class/sec/sec_misc/slideCount
     chown system system /sys/class/leds/lcd-backlight/brightness
     chown system system /sys/class/leds/button-backlight/brightness
     chown system system /sys/class/leds/jogball-backlight/brightness
@@ -435,19 +440,23 @@ on boot
     chown radio system /sys/devices/virtual/sec/sec_touchkey/touchkey_raw_data
     chown radio system /sys/class/sec/sec_touchscreen/disp_all_insdata
     chown radio system /sys/class/sec/sec_touchscreen/disp_all_intdata
+    chown radio system /sys/class/sec/sec_touchscreen/firmware
 	chmod 1664 sys/class/misc/zinitix_touch_misc
     chown radio fm_radio /sys/devices/platform/gpio-event/wakeup_keys
+        chown system radio /sys/class/lcd/display/lcd_power
 
 #change permissions for battery
-    chown radio radio /sys/class/power_supply/battery/call
-    chown radio radio /sys/class/power_supply/battery/video
-    chown radio radio /sys/class/power_supply/battery/music
-    chown radio radio /sys/class/power_supply/battery/browser
-    chown radio radio /sys/class/power_supply/battery/hotspot
-    chown radio radio /sys/class/power_supply/battery/camera
-    chown radio radio /sys/class/power_supply/battery/data_call
-    chown radio radio /sys/class/power_supply/battery/gps
-    chown radio system /sys/class/power_supply/battery/batt_use
+    chmod 0664 /sys/class/power_supply/battery/fg_reset_soc
+    chown system radio /sys/class/power_supply/battery/fg_reset_soc
+    chown system radio /sys/class/power_supply/battery/call
+    chown system radio /sys/class/power_supply/battery/video
+    chown system radio /sys/class/power_supply/battery/music
+    chown system radio /sys/class/power_supply/battery/browser
+    chown system radio /sys/class/power_supply/battery/hotspot
+    chown system radio /sys/class/power_supply/battery/camera
+    chown system radio /sys/class/power_supply/battery/data_call
+    chown system radio /sys/class/power_supply/battery/gps
+    chown system radio /sys/class/power_supply/battery/batt_use
     
 # RTC
     chown radio system /sys/class/rtc/rtc0/bootalarm
@@ -491,13 +500,13 @@ service ueventd /sbin/ueventd
 
 service console /system/bin/sh
     console
-    disabled
+#    disabled
     user shell
     group log
 
 
-on property:ro.secure=0
-    start console
+#on property:ro.secure=0
+#    start console
 
 # adbd is controlled by the persist.service.adb.enable system property
 service adbd /sbin/adbd
@@ -553,7 +562,7 @@ service mobex-daemon /system/bin/npsmobex
     group system inet
 
 service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server
-    socket zygote stream 666
+    socket zygote stream 660 root system
     onrestart write /sys/android_power/request_state wake
     onrestart write /sys/power/state on
     onrestart restart media
@@ -566,7 +575,7 @@ service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-sys
 
 service drm /system/bin/drmserver
     user drm
-    group system root inet sdcard_rw
+    group system root inet sdcard_rw radio
 
     #service drmserver /system/bin/drmserver
     #user root
@@ -700,7 +709,7 @@ service wlan_tool /system/bin/wlan_tool
 
 #service abtfilt /system/bin/abtfilt -d -z -n -v -b -s
 #service abtfilt /system/wlan_tool abtfilt
-service abtfilt /system/bin/abtfilt -d -z -n -v -s -a
+service abtfilt /system/bin/abtfilt -d -z -n -v -s -a -q
     user bluetooth
     group system bluetooth net_bt_admin inet net_raw
     disabled
