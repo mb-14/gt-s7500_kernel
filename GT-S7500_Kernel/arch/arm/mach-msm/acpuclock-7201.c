@@ -317,15 +317,10 @@ static struct clkctl_acpu_speed pll0_960_pll1_245_pll2_1200_pll4_1008[] = {
           { 1, 614400, ACPU_PLL_2, 2, 1, 76800, 3, 6, 200000 },
           { 1, 1008000, ACPU_PLL_4, 6, 0, 126000, 3, 7, 200000},
           #ifdef CONFIG_MSM7X27AA_OVERCLOCK
-          { 1, 1017600, ACPU_PLL_2, 2, 0, 127200, 3, 7, 200000 },
           { 1, 1036800, ACPU_PLL_2, 2, 0, 129600, 3, 7, 200000 },
           { 1, 1056000, ACPU_PLL_2, 2, 0, 132000, 3, 7, 200000 },
-          { 1, 1075200, ACPU_PLL_2, 2, 0, 134400, 3, 7, 200000 },
-          { 1, 1094400, ACPU_PLL_2, 2, 0, 136800, 3, 7, 200000 },
           { 1, 1113600, ACPU_PLL_2, 2, 0, 139200, 3, 7, 200000 },
-          { 1, 1132800, ACPU_PLL_2, 2, 0, 141600, 3, 7, 200000 },
           { 1, 1152000, ACPU_PLL_2, 2, 0, 144000, 3, 7, 200000 },
-          { 1, 1171200, ACPU_PLL_2, 2, 0, 146400, 3, 7, 200000 },
           { 1, 1190400, ACPU_PLL_2, 2, 0, 148800, 3, 7, 200000 },
           #endif
           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, {0, 0, 0, 0} }
@@ -558,8 +553,7 @@ static void acpuclk_set_div(const struct clkctl_acpu_speed *hunt_s)
 	clk_div = (reg_clksel >> 1) & 0x03;
 #ifdef CONFIG_MSM7X27AA_OVERCLOCK
 	if (hunt_s->a11clk_khz > 1008000) {
-		writel(hunt_s->a11clk_khz/19200, PLLn_L_VAL(2));
-		cpu_relax();
+		writel(hunt_s->a11clk_khz/19200, PLLn_L_VAL(0));
 		udelay(50);
 	}
 #endif
@@ -587,12 +581,8 @@ static void acpuclk_set_div(const struct clkctl_acpu_speed *hunt_s)
 	reg_clksel ^= 1;
 	writel_relaxed(reg_clksel, A11S_CLK_SEL_ADDR);
 #ifdef CONFIG_MSM7X27AA_OVERCLOCK
-        if (hunt_s->pll == ACPU_PLL_2 && hunt_s->a11clk_khz <= 1008000) {
-		if ((readl(PLLn_L_VAL(2)) & 0x3f) != PLL_1200_MHZ) {
-			/* Restore PLL2 to standard config */
-			writel(PLL_1200_MHZ, PLLn_L_VAL(2));
-		}
-		cpu_relax();
+        if ( hunt_s->a11clk_khz <= 1008000) {
+			writel(PLL_1200_MHZ, PLLn_L_VAL(0));
 		udelay(50);
         }
 #endif
