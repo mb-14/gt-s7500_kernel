@@ -554,7 +554,6 @@ static void acpuclk_set_div(const struct clkctl_acpu_speed *hunt_s)
 #ifdef CONFIG_MSM7X27AA_OVERCLOCK
 	if (hunt_s->a11clk_khz > 1008000) {
 		writel(hunt_s->a11clk_khz/19200, PLLn_L_VAL(0));
-                cpu_relax();
 		udelay(50);
 	}
 #endif
@@ -584,7 +583,6 @@ static void acpuclk_set_div(const struct clkctl_acpu_speed *hunt_s)
 #ifdef CONFIG_MSM7X27AA_OVERCLOCK
         if ( hunt_s->a11clk_khz <= 1008000) {
 			writel(PLL_1200_MHZ, PLLn_L_VAL(0));
-                cpu_relax();
 		udelay(50);
         }
 #endif
