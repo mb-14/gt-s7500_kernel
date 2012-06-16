@@ -1,7 +1,7 @@
 /*
  * Automatically generated C config: don't edit
  * Linux/arm 2.6.38.6 Kernel Configuration
- * Thu May 31 21:35:17 2012
+ * Fri Jun 15 04:44:18 2012
  */
 #define CONFIG_NF_CONNTRACK_H323 1
 #define CONFIG_SCSI_DMA 1
@@ -76,6 +76,7 @@
 #define CONFIG_DM_CRYPT 1
 #define CONFIG_DEBUG_PANIC_TEST 1
 #define CONFIG_HAVE_PROC_CPU 1
+#define CONFIG_LZO_DECOMPRESS 1
 #define CONFIG_USB_EHCI_ROOT_HUB_TT 1
 #define CONFIG_VIDEO_IR_I2C 1
 #define CONFIG_WIRELESS_EXT_SYSFS 1
@@ -85,6 +86,7 @@
 #define CONFIG_SCSI_SCAN_ASYNC 1
 #define CONFIG_IP_NF_ARPTABLES 1
 #define CONFIG_SND_MSM_SOC 1
+#define CONFIG_ZRAM 1
 #define CONFIG_FORCE_MAX_ZONEORDER 11
 #define CONFIG_MTD_PARTITIONS 1
 #define CONFIG_SND_SOC 1
@@ -593,6 +595,7 @@
 #define CONFIG_MSM_DEBUG_UART_NONE 1
 #define CONFIG_CGROUPS 1
 #define CONFIG_MMC 1
+#define CONFIG_LZO_COMPRESS 1
 #define CONFIG_STACKTRACE 1
 #define CONFIG_MSM_SMD_PKG4 1
 #define CONFIG_PPPOLAC 1
