@@ -1,7 +1,7 @@
 /*
  * Automatically generated C config: don't edit
  * Linux/arm 2.6.38.6 Kernel Configuration
- * Fri Jun 15 04:44:18 2012
+ * Sat Jun 16 10:11:48 2012
  */
 #define CONFIG_NF_CONNTRACK_H323 1
 #define CONFIG_SCSI_DMA 1
@@ -167,6 +167,7 @@
 #define CONFIG_I2C_GPIO 1
 #define CONFIG_MFD_SUPPORT 1
 #define CONFIG_PPPOE 1
+#define CONFIG_KEYPAD_TOUCH_BLN 1
 #define CONFIG_NETFILTER_XT_MATCH_OWNER 1
 #define CONFIG_IP_ADVANCED_ROUTER 1
 #define CONFIG_ENABLE_WARN_DEPRECATED 1
