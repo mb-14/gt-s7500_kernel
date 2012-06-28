@@ -1769,7 +1769,6 @@ static void msm_pm_power_off(void)
 #else	
 	
 	printk("request_phone_power_off\n");
-	request_phone_power_off_reset(1);
 	power_off_done = 1;
 	printk("Do Nothing!!\n");
 #endif
