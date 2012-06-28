@@ -1754,17 +1754,9 @@ static struct platform_suspend_ops msm_pm_ops = {
 
 static uint32_t restart_reason = 0x776655AA;
 
-struct smem_info {
-	    unsigned int info;
-};
- 
-extern struct smem_info *smem_flag;
-extern void request_phone_power_off_reset(int flag);
+
 int power_off_done;
-int (*set_recovery_mode)(void);
-EXPORT_SYMBOL(set_recovery_mode);
-int (*set_recovery_mode_done)(void);
-EXPORT_SYMBOL(set_recovery_mode_done);
+
 
 static void msm_pm_power_off(void)
 {
@@ -1775,7 +1767,7 @@ static void msm_pm_power_off(void)
 	msm_proc_comm(PCOM_POWER_DOWN, 0, 0);
 
 #else	
-	//smem_flag->info = 0x0;
+	
 	printk("request_phone_power_off\n");
 	request_phone_power_off_reset(1);
 	power_off_done = 1;
@@ -1789,9 +1781,7 @@ static void msm_pm_restart(char str, const char *cmd)
 {
 	
 	msm_rpcrouter_close();
-#if defined(CONFIG_SEC_DEBUG) && defined(CONFIG_SEC_MISC)
-	//smem_flag->info = 0x0;
-#endif
+
 	printk("send PCOM_RESET_CHIP\n");
         msm_proc_comm(PCOM_RESET_CHIP_IMM, &restart_reason, 0);
 	printk("Do Nothing!!\n");
@@ -1809,13 +1799,8 @@ static int msm_reboot_call
 		if (!strcmp(cmd, "bootloader")) {
 			restart_reason = 0x77665500;
 		} else if (!strcmp(cmd, "recovery")) {
-		set_recovery_mode();	
-
                    restart_reason = 0x77665502;
 		} else if (!strcmp(cmd, "recovery_done")) {
-#if defined(CONFIG_SEC_MISC)
-	 set_recovery_mode_done();		
-#endif
 			restart_reason = 0x77665503;			
 		} else if (!strcmp(cmd, "eraseflash")) {
 			restart_reason = 0x776655EF;
