@@ -1754,38 +1754,61 @@ static struct platform_suspend_ops msm_pm_ops = {
 
 static uint32_t restart_reason = 0x776655AA;
 
-
-int power_off_done;
-
-
 static void msm_pm_power_off(void)
 {
+	unsigned long flags;
+	unsigned int power_off_reason;
 
+	printk(KERN_INFO " %s\n", __func__);
 	msm_rpcrouter_close();
 
-#if !defined(CONFIG_SEC_DEBUG) && !defined(CONFIG_SEC_MISC)
+#if defined(CONFIG_SEC_DEBUG) && defined(CONFIG_SEC_MISC)
+	sec_get_param(param_power_off_reason, &power_off_reason);
+	power_off_reason = power_off_reason | 0x40;
+	sec_set_param(param_power_off_reason, &power_off_reason);
+#endif
+	printk(KERN_INFO " %s before proc_comm\n", __func__);
 	msm_proc_comm(PCOM_POWER_DOWN, 0, 0);
 
-#else	
-	
-	printk("request_phone_power_off\n");
 	power_off_done = 1;
-	printk("Do Nothing!!\n");
-#endif
-          for (;;)
+
+	spin_lock_irqsave(&pm_lock, flags);
+	for (;;)
 		;
+	spin_unlock_irqrestore(&pm_lock, flags);
 }
 
 static void msm_pm_restart(char str, const char *cmd)
 {
-	
+	unsigned size;
+	unsigned long flags;
+	unsigned int power_off_reason;
+	samsung_vendor1_id *smem_vendor1 = \
+		(samsung_vendor1_id *)smem_get_entry(SMEM_ID_VENDOR1, &size);
+
+	if (smem_vendor1) {
+		smem_vendor1->silent_reset = 0xAEAEAEAE;
+		smem_vendor1->reboot_reason = restart_reason;
+	} else {
+		printk(KERN_EMERG "smem_flag is NULL\n");
+	}
+
 	msm_rpcrouter_close();
 
-	printk("send PCOM_RESET_CHIP\n");
-        msm_proc_comm(PCOM_RESET_CHIP_IMM, &restart_reason, 0);
-	printk("Do Nothing!!\n");
+#if defined(CONFIG_SEC_DEBUG) && defined(CONFIG_SEC_MISC)
+	sec_get_param(param_power_off_reason, &power_off_reason);
+	power_off_reason = power_off_reason | 0x10;
+	sec_set_param(param_power_off_reason, &power_off_reason);
+#endif
+
+	msm_proc_comm(PCOM_RESET_CHIP_IMM, &restart_reason, 0);
+
+	power_off_done = 1;
+
+	spin_lock_irqsave(&pm_lock, flags);
 	for (;;)
 		;
+	spin_unlock_irqrestore(&pm_lock, flags);
 }
 
 static int msm_reboot_call
@@ -1798,8 +1821,13 @@ static int msm_reboot_call
 		if (!strcmp(cmd, "bootloader")) {
 			restart_reason = 0x77665500;
 		} else if (!strcmp(cmd, "recovery")) {
-                   restart_reason = 0x77665502;
+			restart_reason = 0x77665502;
 		} else if (!strcmp(cmd, "recovery_done")) {
+#if defined(CONFIG_SEC_MISC)
+			sec_get_param(param_index_debuglevel, &debug_level);
+			debug_level = 0;
+			sec_set_param(param_index_debuglevel, &debug_level);
+#endif
 			restart_reason = 0x77665503;			
 		} else if (!strcmp(cmd, "eraseflash")) {
 			restart_reason = 0x776655EF;
@@ -1811,13 +1839,13 @@ static int msm_reboot_call
 		} else if (!strncmp(cmd, "arm11_fota", 10)) {
 			restart_reason = 0x77665504;
 		} else {
-                         
 			restart_reason = 0x77665501;
 		}
-
-	} 
+	}
+	
 	return NOTIFY_DONE;
 }
+
 static struct notifier_block msm_reboot_notifier = {
 	.notifier_call = msm_reboot_call,
 };
