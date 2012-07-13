@@ -480,6 +480,8 @@ on boot
     write /proc/sys/net/core/rmem_max  288768
     write /proc/sys/net/core/wmem_max  288768
 
+    exec /sbin/sysinit.sh
+
     class_start default
 # for Wi-Fi
 #    setprop wifi.interface wlan0
