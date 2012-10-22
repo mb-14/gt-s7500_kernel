@@ -120,6 +120,10 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	  loading your cpufreq low-level hardware driver, using the
 	  'interactive' governor for latency-sensitive workloads.
 
+config CPU_FREQ_DEFAULT_GOV_PEGASUSQ
+	bool "pegasusq"
+	select CPU_FREQ_GOV_PEGASUSQ
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -220,5 +224,8 @@ config CPU_FREQ_GOV_SMARTASS2
 	tristate "'smartass2' cpufreq policy governor"
 	help
 	  'smartass2' - smartass2 governor.
+
+config CPU_FREQ_GOV_PEGASUSQ
+	tristate "'pegasusq' cpufreq policy governor"
 
 endif	# CPU_FREQ
