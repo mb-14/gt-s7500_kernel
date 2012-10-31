@@ -1,8 +1,8 @@
-/* This file is auto generated, version 40 */
+/* This file is auto generated, version 44 */
 /*  PREEMPT */
 #define UTS_MACHINE "arm"
-#define UTS_VERSION "#40 PREEMPT Mon Oct 22 21:29:21 MST 2012"
-#define LINUX_COMPILE_TIME "21:29:21"
+#define UTS_VERSION "#44 PREEMPT Wed Oct 31 07:24:51 MST 2012"
+#define LINUX_COMPILE_TIME "07:24:51"
 #define LINUX_COMPILE_BY "mb-14"
 #define LINUX_COMPILE_HOST "gooey.goo.im"
 #define LINUX_COMPILE_DOMAIN "(none)"
