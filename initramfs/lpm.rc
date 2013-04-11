@@ -16,7 +16,7 @@ loglevel 3
 #    export ANDROID_DATA /data
 #    export EXTERNAL_STORAGE /mnt/sdcard
 #    export ASEC_MOUNTPOINT /mnt/asec
-	 export LOOP_MOUNTPOINT /mnt/obb
+    export LOOP_MOUNTPOINT /mnt/obb
     export BOOTCLASSPATH /system/framework/core.jar:/system/framework/bouncycastle.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/android.policy.jar:/system/framework/services.jar:/system/framework/core-junit.jar
 
     mkdir /system
@@ -51,6 +51,8 @@ on boot
 	hostname localhost
 	domainname localdomain
 	class_start default
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "userspace"
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed 122880
 
 service ueventd /sbin/ueventd
     critical
