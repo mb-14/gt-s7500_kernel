@@ -554,7 +554,7 @@ static void acpuclk_set_div(const struct clkctl_acpu_speed *hunt_s)
 	clk_div = (reg_clksel >> 1) & 0x03;
 #ifdef CONFIG_MSM7X27AA_OVERCLOCK
 // Perform overclocking if requested
-	if(hunt_s->pll == ACPU_PLL_2 && hunt_s->a11clk_khz > 1008000) {
+	if(hunt_s->pll == ACPU_PLL_2 && hunt_s->a11clk_khz > 800000) {
 		// Change the speed of PLL2
 		writel_relaxed(hunt_s->a11clk_khz/19200, PLLn_L_VAL(ACPU_PLL_2));
 		udelay(50);
@@ -585,7 +585,7 @@ static void acpuclk_set_div(const struct clkctl_acpu_speed *hunt_s)
 	writel_relaxed(reg_clksel, A11S_CLK_SEL_ADDR);
 #ifdef CONFIG_MSM7X27AA_OVERCLOCK
         // Recover from overclocking
-	if(hunt_s->pll == ACPU_PLL_2 && hunt_s->a11clk_khz <= 1008000) {
+	if(hunt_s->pll == ACPU_PLL_2 && hunt_s->a11clk_khz <= 800000) {
 		// Restore the speed of PLL2
 		writel_relaxed(PLL_1200_MHZ, PLLn_L_VAL(ACPU_PLL_2));
 		udelay(50);
