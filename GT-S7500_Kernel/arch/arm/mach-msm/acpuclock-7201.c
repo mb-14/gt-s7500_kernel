@@ -318,12 +318,14 @@ static struct clkctl_acpu_speed pll0_960_pll1_245_pll2_1200_pll4_1008[] = {
           { 1, 960000, ACPU_PLL_0, 4, 0, 120000, 3, 7, 200000 },
           { 1, 1008000, ACPU_PLL_4, 6, 0, 126000, 3, 7, 200000},
           #ifdef CONFIG_MSM7X27AA_OVERCLOCK
-	{ 1, 1056000, ACPU_PLL_2,  2,  0, 132000,   3,  7, 200000 },
-	{ 1, 1113600, ACPU_PLL_2,  2,  0, 139200,   3,  7, 200000 },
-	{ 1, 1152000, ACPU_PLL_2,  2,  0, 144000,   3,  7, 200000 },
-	{ 1, 1190400, ACPU_PLL_2,  2,  0, 148800,   3,  7, 200000 },
-	{ 1, 1228800, ACPU_PLL_2,  2,  0, 153600,   3,  7, 200000 },
-	{ 1, 1267200, ACPU_PLL_2,  2,  0, 158400,   3,  7, 200000 },
+	   { 1, 1036800, ACPU_PLL_4, 6, 0, 129600, 3, 7, 200000 },
+          { 1, 1056000, ACPU_PLL_4, 6, 0, 132000, 3, 7, 200000 },
+          { 1, 1113600, ACPU_PLL_4, 6, 0, 139200, 3, 7, 200000 },
+          { 1, 1152000, ACPU_PLL_4, 6, 0, 144000, 3, 7, 200000 },
+          { 1, 1190400, ACPU_PLL_4, 6, 0, 148800, 3, 7, 200000 },
+          { 1, 1228800, ACPU_PLL_4, 6, 0, 153600, 3, 7, 200000 },
+         //{ 1, 1267200, ACPU_PLL_4, 6, 0, 158400, 3, 7, 200000 },
+         // { 1, 1305600, ACPU_PLL_4, 6, 0, 163200, 3, 7, 200000 },
           #endif
           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, {0, 0, 0, 0} }
 };
@@ -554,11 +556,12 @@ static void acpuclk_set_div(const struct clkctl_acpu_speed *hunt_s)
 	clk_div = (reg_clksel >> 1) & 0x03;
 #ifdef CONFIG_MSM7X27AA_OVERCLOCK
 // Perform overclocking if requested
-	if(hunt_s->pll == ACPU_PLL_2 && hunt_s->a11clk_khz > 800000) {
-		// Change the speed of PLL2
-		writel_relaxed(hunt_s->a11clk_khz/19200, PLLn_L_VAL(ACPU_PLL_2));
-		udelay(50);
-	}
+	if (hunt_s->a11clk_khz > 1008000) {
+           // Change the speed of PLL4
+   writel(hunt_s->a11clk_khz/19200,PLL4_L_VAL);
+udelay(50);
+}
+
 #endif
         /* CLK_SEL_SRC1NO */
 	src_sel = reg_clksel & 1;
@@ -585,9 +588,9 @@ static void acpuclk_set_div(const struct clkctl_acpu_speed *hunt_s)
 	writel_relaxed(reg_clksel, A11S_CLK_SEL_ADDR);
 #ifdef CONFIG_MSM7X27AA_OVERCLOCK
         // Recover from overclocking
-	if(hunt_s->pll == ACPU_PLL_2 && hunt_s->a11clk_khz <= 800000) {
-		// Restore the speed of PLL2
-		writel_relaxed(PLL_1200_MHZ, PLLn_L_VAL(ACPU_PLL_2));
+	 if (hunt_s->a11clk_khz<=1008000) {
+          // Restore the speed of PLL4
+    writel(PLL_1008_MHZ, PLL4_L_VAL);
 		udelay(50);
 	}
 #endif

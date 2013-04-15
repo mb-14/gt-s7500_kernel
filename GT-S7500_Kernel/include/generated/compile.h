@@ -1,8 +1,8 @@
-/* This file is auto generated, version 46 */
+/* This file is auto generated, version 47 */
 /*  PREEMPT */
 #define UTS_MACHINE "arm"
-#define UTS_VERSION "#46 PREEMPT Fri Apr 12 23:13:12 MST 2013"
-#define LINUX_COMPILE_TIME "23:13:12"
+#define UTS_VERSION "#47 PREEMPT Mon Apr 15 06:53:17 MST 2013"
+#define LINUX_COMPILE_TIME "06:53:17"
 #define LINUX_COMPILE_BY "mb-14"
 #define LINUX_COMPILE_HOST "iof303"
 #define LINUX_COMPILE_DOMAIN "pnap.ioflood.com"
