@@ -362,6 +362,7 @@ deps_config := \
 	drivers/s390/char/Kconfig \
 	drivers/char/tpm/Kconfig \
 	drivers/char/pcmcia/Kconfig \
+	drivers/char/frandom/Kconfig \
 	drivers/char/hw_random/Kconfig \
 	drivers/char/ipmi/Kconfig \
 	drivers/char/diag/Kconfig \

@@ -1,7 +1,7 @@
 /*
  * Automatically generated C config: don't edit
  * Linux/arm 2.6.38.6 Kernel Configuration
- * Thu Apr 11 09:06:02 2013
+ * Mon Apr 15 08:22:10 2013
  */
 #define CONFIG_NF_CONNTRACK_H323 1
 #define CONFIG_SCSI_DMA 1
@@ -636,6 +636,7 @@
 #define CONFIG_MSM_KGSL_MMU_PAGE_FAULT 1
 #define CONFIG_ARCH_MSM7X27A 1
 #define CONFIG_MSDOS_PARTITION 1
+#define CONFIG_FRANDOM 1
 #define CONFIG_BT_HCIUART 1
 #define CONFIG_HAVE_OPROFILE 1
 #define CONFIG_HAVE_GENERIC_DMA_COHERENT 1
