@@ -1,7 +1,7 @@
 /*
  * Automatically generated C config: don't edit
  * Linux/arm 2.6.38.6 Kernel Configuration
- * Mon Apr 15 08:22:10 2013
+ * Tue Apr 16 02:51:33 2013
  */
 #define CONFIG_NF_CONNTRACK_H323 1
 #define CONFIG_SCSI_DMA 1
@@ -561,6 +561,7 @@
 #define CONFIG_DIAG_CHAR 1
 #define CONFIG_NETFILTER_XT_MATCH_CONNLIMIT 1
 #define CONFIG_IP_NF_ARPFILTER 1
+#define CONFIG_KSM 1
 #define CONFIG_MSM_IDLE_STATS_BUCKET_COUNT 10
 #define CONFIG_NF_NAT_H323 1
 #define CONFIG_IP_NF_TARGET_NETMAP 1
