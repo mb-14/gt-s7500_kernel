@@ -1755,7 +1755,7 @@ static struct msm_i2c_platform_data msm_gsbi1_qup_i2c_pdata = {
 #if defined(_CONFIG_MACH_JENA) || defined(_CONFIG_MACH_TREBON)
 
 #define MSM_PMEM_MDP_SIZE       0x1DD1000
-#define MSM_PMEM_ADSP_SIZE      0xC00000 //0x1000000
+#define MSM_PMEM_ADSP_SIZE      0x1000000
 #ifdef CONFIG_FB_MSM_TRIPLE_BUFFER
 /* prim = 320 x 480 x 4(bpp) x 3(pages) */
 #define MSM_FB_SIZE             320 * 480 * 4 * 3
